@@ -1,44 +1,35 @@
-import pip
+from setuptools import setup, find_packages
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from distutils.core import setup, find_packages
-
-with open("README.md", "r") as fh:
+with open("README.md", encoding="utf8") as fh:
     long_description = fh.read()
 
-links = []
-requires = []
-
-try:
-    requirements = pip.req.parse_requirements('requirements.txt')
-except:
-    # new versions of pip requires a session
-    requirements = pip.req.parse_requirements(
-        'requirements.txt', session=pip.download.PipSession())
-
-for item in requirements:
-    # we want to handle package names and also repo urls
-    if getattr(item, 'url', None):  # older pip has url
-        links.append(str(item.url))
-    if getattr(item, 'link', None): # newer pip has link
-        links.append(str(item.link))
-    if item.req:
-        requires.append(str(item.req))
+# with open('requirements.txt') as f:
+#     requirements = f.read().splitlines()
 
 setup(
     name="BERTify",
     version="0.0.1",
     description="BERT embedding extractor for bengali / english data.",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url='https://github.com/khalidsaifullaah/BERTify',
-    license='MIT',
+    author='Khalid Saifullah',
+    author_email='ksaifullah172043@bscse.uiu.ac.bd',
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=False,
-    platforms='any',
-    install_requires=requires,
-    dependency_links=links
+    url='https://github.com/khalidsaifullaah/BERTify',
+    license='MIT',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    install_requires=[
+        "numpy==1.21.2",
+        "torch==1.9.0",
+        "tqdm==4.62.2",
+        "transformers==4.10.2",
+    ],
+    classifiers=[
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python'
+    ],
 )
