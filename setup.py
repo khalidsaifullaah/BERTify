@@ -13,7 +13,6 @@ setup(
     author='Khalid Saifullah',
     author_email='ksaifullah172043@bscse.uiu.ac.bd',
     packages=['BERTify'],
-    include_package_data=True,
     url='https://github.com/khalidsaifullaah/BERTify',
     license='MIT',
     long_description=long_description,
@@ -33,4 +32,5 @@ setup(
         'Programming Language :: Python'
     ],
     package_data={'': ['*']},
+    python_requires='>=3.5',
 )
