@@ -1,6 +1,7 @@
 # BERTify
 
-This is an easy-to-use python module that helps you to extract the **BERT embeddings** for a large text dataset efficiently. It is intended to be used for Bengali and English texts. (Use GPU for faster inference)
+This is an easy-to-use python module that helps you to extract the **BERT embeddings** for a large text dataset efficiently. It is intended to be used for Bengali and English texts.
+
 
 ## Installation
 ```bash
@@ -33,8 +34,9 @@ texts = ["how are you doing?", "I don't know about this.", "This is the most imp
 en_embeddings = en_bertify.embedding(texts) 
 # shape of the returned matrix in this example 3x3072 (3 -> num. of texts, 3072 -> embedding dim.)
 ```
+_Use GPU for faster inference. Extracting embeddings for a list of **498126** texts took **~21 mins.** on Kaggle/Colab GPU. (Haven't perform any hardcore benchmark though)_
+
+
 ## License
 
-Contents of this repository are restricted to non-commercial research purposes only under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+[MIT License](https://github.com/khalidsaifullaah/BERTify/blob/main/LICENSE).

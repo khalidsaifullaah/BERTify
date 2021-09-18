@@ -12,10 +12,15 @@ from torch.utils.data import DataLoader, Dataset
 
 class BERTify():
     """A module for extracting embedding from BERT model for Bengali or English text datasets.
-    For `'en'` -> English data, it uses `bert-base-uncased` model embeddings, for `'bn'` -> Bengali data, it uses `sahajBERT` model embeddings.
+    For `'en'` -> English data, it uses `bert-base-uncased` model embeddings, 
+    for `'bn'` -> Bengali data, it uses `sahajBERT` model embeddings.
+
     Args:
         lang (str, optional): language of your data. Must be in ['en', 'bn']. Defaults to "en".
-        last_four_layers_embedding (bool, optional): BERT paper discusses they've reached the best results by concatenating the output of the last four layers, so if this param is true, your embedding vector would be (for bert-base model for example) 4*768=3072, else 768 dimensional. Defaults to False.
+        last_four_layers_embedding (bool, optional): BERT paper discusses they've reached the best results 
+        by concatenating the output of the last four layers, so if this argument is true, 
+        your embedding vector would be (for bert-base model for example) 4*768=3072, else it'd be 768 dimensional. 
+        Defaults to False.
     """
     def __init__(self, lang: str = "en", last_four_layers_embedding: bool = False):
 
@@ -45,12 +50,15 @@ class BERTify():
 
 
     def embedding(self, texts: List[str]) -> np.ndarray:
-        """The embedding function, that takes a list of texts, feed them through the model and returns a list of embeddings
+        """The embedding function, that takes a list of texts, feed them through the model 
+            and returns a list of embeddings.
+
         Args:
-            texts (List[int]): A list of texts, that you want to extract embedding for (e.g. ["This movie was total B.S.", "I totally loved all the characters"])
+            texts (List[int]): A list of texts, that you want to extract embedding for 
+            (e.g. ["This movie was total B.S.", "I totally loved all the characters"])
             index (int): [description]
         Returns:
-            int: [description]
+            np.ndarray: A numpy matrix of shape `num_of_texts x embedding_dimension`
         """
 
         # Turning the list of texts into a Dataset, so that we can batchify using DataLoader and speedup inference
