@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open("README.md", 'r', encoding='utf-8') as fh:
     long_description = fh.read()
@@ -12,7 +12,7 @@ setup(
     description="BERT embedding extractor for bengali / english data.",
     author='Khalid Saifullah',
     author_email='ksaifullah172043@bscse.uiu.ac.bd',
-    packages=['BERTify'],
+    packages=['bertify'],
     url='https://github.com/khalidsaifullaah/BERTify',
     license='MIT',
     long_description=long_description,
