@@ -89,14 +89,17 @@ class BERTify():
                 cat_hidden_states = torch.cat(tuple(last_four_layers), dim=-1)
 
                 # take the mean of the concatenated vector over the token dimension
-                sentence_embedding = torch.mean(cat_hidden_states, dim=1)   
+                text_embedding = torch.mean(cat_hidden_states, dim=1)   
                 
             else:
-                sentence_embedding = torch.mean(hidden_states[-1], dim=1).squeeze()
+                text_embedding = torch.mean(hidden_states[-1], dim=1).squeeze()
 
-            text_embeddings.append(sentence_embedding.to('cpu'))
+            text_embeddings.append(text_embedding.to('cpu'))
 
         # turning the list of embeddings into a matrix
         text_embeddings = torch.cat(tuple(text_embeddings), 0)
+
+        # clearing out the GPU cache
+        torch.cuda.empty_cache()
 
         return text_embeddings.numpy()
