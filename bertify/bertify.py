@@ -28,6 +28,7 @@ class BERTify():
         # Set the device to GPU (cuda) if available, otherwise stick with CPU
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.last_four_layers_embedding = last_four_layers_embedding
+        self.batch_size = 64    # keep pushing this one for faster inference (for now we kept it hard coded)
 
         if lang.lower() == "en":
             checkpoint = "bert-base-uncased"
@@ -56,7 +57,6 @@ class BERTify():
         Args:
             texts (List[int]): A list of texts, that you want to extract embedding for 
             (e.g. ["This movie was total B.S.", "I totally loved all the characters"])
-            index (int): [description]
         Returns:
             np.ndarray: A numpy matrix of shape `num_of_texts x embedding_dimension`
         """
@@ -77,7 +77,7 @@ class BERTify():
         texts_data = TextsData(texts, self.tokenizer)
 
         data_collator = DataCollatorWithPadding(tokenizer=self.tokenizer)
-        texts_dl = DataLoader(texts_data, batch_size=64, collate_fn=data_collator)
+        texts_dl = DataLoader(texts_data, batch_size=self.batch_size, collate_fn=data_collator)
 
         text_embeddings = []
         for batch in tqdm(texts_dl):
