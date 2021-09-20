@@ -2,11 +2,7 @@
 
 This is an easy-to-use python module that helps you to extract the **BERT embeddings** for a large text dataset efficiently. It is intended to be used for Bengali and English texts.
 
-
-## Quick Installation
-```bash
-$ pip install git+https://github.com/khalidsaifullaah/BERTify
-```
+>_Specially, optimized for usability in limited computational setups (i.e. free colab/kaggle GPUs). Extracting embeddings for a list of **`498126 texts`** took **`~21 mins.`** on Kaggle/Colab GPU. (Haven't perform any hardcore benchmark, so take these numbers with a grain of salt)._
 
 ## Requirements
 - numpy
@@ -14,9 +10,15 @@ $ pip install git+https://github.com/khalidsaifullaah/BERTify
 - tqdm
 - transformers
 
+## Quick Installation
+```bash
+$ pip install git+https://github.com/khalidsaifullaah/BERTify
+```
+
 ## Usage
 
 ```python
+# !pip install git+https://github.com/khalidsaifullaah/BERTify
 from bertify import BERTify
 
 # Example 1: Bengali Embedding Extraction
@@ -54,7 +56,7 @@ en_embeddings = en_bertify.embedding(texts)
 A module for extracting embedding from BERT model for Bengali or English text datasets.
     For `'en'` -> English data, it uses [`bert-base-uncased`](https://huggingface.co/bert-base-uncased) model embeddings, 
     for `'bn'` -> Bengali data, it uses [`sahajBERT`](https://huggingface.co/neuropark/sahajBERT) model embeddings.
-    
+
 > Parameters:
 
 > **_`lang (str, optional)`_**: language of your data. Currently supports only `'en'` and `'bn'`. Defaults to `'en'`.
@@ -73,7 +75,6 @@ The embedding function, that takes a list of texts, feed them through the model 
 > Returns:
 
 > **_`np.ndarray`_**: A numpy matrix of shape `num_of_texts x embedding_dimension`
-
 
 ## License
 

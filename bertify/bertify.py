@@ -55,7 +55,7 @@ class BERTify():
             and returns a list of embeddings.
 
         Args:
-            texts (List[int]): A list of texts, that you want to extract embedding for 
+            texts (List[str]): A list of texts, that you want to extract embedding for 
             (e.g. ["This movie was total B.S.", "I totally loved all the characters"])
         Returns:
             np.ndarray: A numpy matrix of shape `num_of_texts x embedding_dimension`
