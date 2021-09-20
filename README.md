@@ -70,7 +70,7 @@ your embedding vector would be (for `bert-base` model for example) `4*768=3072` 
 The embedding function, that takes a list of texts, feed them through the model and returns a list of embeddings.
 > Parameters:
 
-> **_`texts (List[int])`_**: A list of texts, that you want to extract embedding for (e.g. `["This movie was a total waste of time.", "Whoa! Loved this movie, totally loved all the characters"]`)
+> **_`texts (List[str])`_**: A list of texts, that you want to extract embedding for (e.g. `["This movie was a total waste of time.", "Whoa! Loved this movie, totally loved all the characters"]`)
 
 > Returns:
 
