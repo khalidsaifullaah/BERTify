@@ -2,7 +2,7 @@
 
 This is an easy-to-use python module that helps you to extract the **BERT embeddings** for a large text dataset efficiently. It is intended to be used for Bengali and English texts.
 
->_Specially, optimized for usability in limited computational setups (i.e. free colab/kaggle GPUs). Extracting embeddings for a list of **`498126 texts`** took **`~21 mins.`** on Kaggle/Colab GPU. (Haven't perform any hardcore benchmark, so take these numbers with a grain of salt)._
+>_Specially, optimized for usability in limited computational setups (i.e. free colab/kaggle GPUs). Extracting embeddings for [IMDB](https://pytorch.org/text/stable/datasets.html#imdb) dataset (a list of **`25000 texts`**) took less than **`~28 mins.`** on Colab's GPU. (Haven't perform any hardcore benchmark, so take these numbers with a grain of salt)._
 
 ## Requirements
 - numpy
