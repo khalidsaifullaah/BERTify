@@ -18,18 +18,24 @@ $ pip install git+https://github.com/khalidsaifullaah/BERTify
 ## Usage
 
 ```python
-# !pip install git+https://github.com/khalidsaifullaah/BERTify
 from bertify import BERTify
 
 # Example 1: Bengali Embedding Extraction
 bn_bertify = BERTify(
-    lang="bn",  # language of your text. Use `bn` for Bengali or `en` for English
-    last_four_layers_embedding=True  # to get richer embeddings. (caveat: dimension is high)
+    lang="bn",  # language of your text.
+    last_four_layers_embedding=True  # to get richer embeddings.
 )
+
+# By default, `batch_size` is set to 64. Set `batch_size` higher for making things even faster but higher value than 96 may throw `CUDA out of memory` on Colab's GPU, so try at your own risk.
+
+# bn_bertify.batch_size = 96
+
 # A list of texts that we want the embedding for, can be one or many. (You can turn your whole dataset into a list of texts and pass it into the method for faster embedding extraction)
 texts = ["বিখ্যাত হওয়ার প্রথম পদক্ষেপ", "জীবনে সবচেয়ে মূল্যবান জিনিস হচ্ছে", "বেশিরভাগ মানুষের পছন্দের জিনিস হচ্ছে"]
+
 bn_embeddings = bn_bertify.embedding(texts)   # returns numpy matrix 
 # shape of the returned matrix in this example 3x4096 (3 -> num. of texts, 4096 -> embedding dim.)
+
 
 
 
@@ -38,6 +44,9 @@ en_bertify = BERTify(
     lang="en",
     last_four_layers_embedding=True
 )
+
+# bn_bertify.batch_size = 96
+
 texts = ["how are you doing?", "I don't know about this.", "This is the most important thing."]
 en_embeddings = en_bertify.embedding(texts) 
 # shape of the returned matrix in this example 3x3072 (3 -> num. of texts, 3072 -> embedding dim.)

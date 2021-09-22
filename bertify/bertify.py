@@ -1,3 +1,5 @@
+# Author: Khalid Saifullah (https://twitter.com/k_saifullaah)
+
 from typing import List
 
 import numpy as np
@@ -14,7 +16,6 @@ class BERTify():
     """A module for extracting embedding from BERT model for Bengali or English text datasets.
     For `'en'` -> English data, it uses `bert-base-uncased` model embeddings, 
     for `'bn'` -> Bengali data, it uses `sahajBERT` model embeddings.
-
     Args:
         lang (str, optional): language of your data. Must be in ['en', 'bn']. Defaults to "en".
         last_four_layers_embedding (bool, optional): BERT paper discusses they've reached the best results 
@@ -53,7 +54,6 @@ class BERTify():
     def embedding(self, texts: List[str]) -> np.ndarray:
         """The embedding function, that takes a list of texts, feed them through the model 
             and returns a list of embeddings.
-
         Args:
             texts (List[str]): A list of texts, that you want to extract embedding for 
             (e.g. ["This movie was total B.S.", "I totally loved all the characters"])
@@ -64,26 +64,28 @@ class BERTify():
         # Turning the list of texts into a Dataset, so that we can batchify using DataLoader and speedup inference
         class TextsData(Dataset):
             def __init__(self, texts, tokenizer):
-                self.encodings = tokenizer(texts, truncation=True)
+                self.texts = texts
+                self.tokenizer = tokenizer
+
 
             def __getitem__(self, idx):
-                item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
-                # item['input_ids'] = item['input_ids'].to(device)
-                return item
+                encodings = self.tokenizer(self.texts[idx], truncation=True)
+                
+                return encodings
 
             def __len__(self):
-                return len(self.encodings['input_ids'])
-
-        texts_data = TextsData(texts, self.tokenizer)
+                return len(self.texts)
 
         data_collator = DataCollatorWithPadding(tokenizer=self.tokenizer)
+        texts_data = TextsData(texts, self.tokenizer)
         texts_dl = DataLoader(texts_data, batch_size=self.batch_size, collate_fn=data_collator)
 
+        # A list for storing all the batch embeddings
         text_embeddings = []
+
         for batch in tqdm(texts_dl):
             # forward pass
             with torch.inference_mode():
-                # try:
                 out = self.model(input_ids=batch['input_ids'].to(self.device))
 
             # we only want the hidden_states
@@ -96,15 +98,19 @@ class BERTify():
                 # cast layers to a tuple and concatenate over the last dimension
                 cat_hidden_states = torch.cat(tuple(last_four_layers), dim=-1)
 
-                # take the mean of the concatenated vector over the token dimension
+                # take the mean of the concatenated embedding vectors over the token dimension
                 text_embedding = torch.mean(cat_hidden_states, dim=1)   
-                
+
             else:
+                # take the embedding vector from the last layer
                 text_embedding = torch.mean(hidden_states[-1], dim=1).squeeze()
 
             text_embeddings.append(text_embedding.to('cpu'))
 
-        # turning the list of embeddings into a matrix
+            # clearing out the GPU cache
+            torch.cuda.empty_cache()
+
+        # turning the list of embeddings into a matrix by concatnating them all in vertical dimension/row axis
         text_embeddings = torch.cat(tuple(text_embeddings), 0)
 
         # clearing out the GPU cache

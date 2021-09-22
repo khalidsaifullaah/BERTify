@@ -8,7 +8,7 @@ with open("README.md", 'r', encoding='utf-8') as fh:
 
 setup(
     name="BERTify",
-    version="0.0.2",
+    version="0.0.3",
     description="BERT embedding extractor for bengali / english data.",
     author='Khalid Saifullah',
     author_email='ksaifullah172043@bscse.uiu.ac.bd',
