@@ -39,15 +39,17 @@ class BERTify():
 
         else:
             raise ValueError("Unknown language. Use 'en' for English data or 'bn' for Bengali data.")
+        
+        self.model_name_or_path = checkpoint    # if you want to use a custom model, just pass the HF path to the model here (caution: the rest of the code is not tested for custom models)
 
         print("#"*10)
         print(f"Using {self.device} for computation")
-        print(f"using {checkpoint} model for {lang} embedding")
+        print(f"using {self.model_name_or_path} model for {lang} embedding")
         print("#"*10)
 
         # Download the model and tokenizer from the checkpoint
-        self.tokenizer = AutoTokenizer.from_pretrained(checkpoint, use_fast=True)
-        self.model = AutoModel.from_pretrained(checkpoint, output_hidden_states=True).to(self.device)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name_or_path, use_fast=True)
+        self.model = AutoModel.from_pretrained(self.model_name_or_path, output_hidden_states=True).to(self.device)
         self.model.eval()
 
 

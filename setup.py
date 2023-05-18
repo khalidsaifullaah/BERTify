@@ -19,7 +19,7 @@ setup(
     long_description_content_type='text/markdown',
     install_requires=[
         "numpy==1.21.2",
-        "torch==1.9.0",
+        "torch",
         "tqdm==4.62.2",
         "transformers==4.10.2",
     ],
