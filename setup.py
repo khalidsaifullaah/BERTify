@@ -18,10 +18,10 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     install_requires=[
-        "numpy==1.21.2",
+        "numpy",
         "torch",
-        "tqdm==4.62.2",
-        "transformers==4.10.2",
+        "tqdm",
+        "transformers",
     ],
     classifiers=[
         'Programming Language :: Python :: 3.5',
